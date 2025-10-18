@@ -43,8 +43,8 @@ const NewsCard = ({
       />
 
       {/* Details Preview */}
-      <p className="text-sm text-gray-700 line-clamp-2">
-        {details}{" "}
+      <p className="text-sm text-gray-700">
+        <span className="line-clamp-2 block">{details}</span>
         <span className="text-blue-600 font-medium cursor-pointer">
           Read More
         </span>
@@ -55,9 +55,8 @@ const NewsCard = ({
         Tags:{" "}
         {tags.map((tag, index) => (
           <span key={index}>
-            {" "}
             {tag}
-            {index < tags.length - 1 ? "," : ""}
+            {index < tags.length - 1 ? ", " : ""}
           </span>
         ))}
       </div>
@@ -68,7 +67,9 @@ const NewsCard = ({
           {Array.from({ length: 5 }).map((_, index) => (
             <AiFillStar
               key={index}
-              className={index < rating.number ? "text-orange-400" : "text-gray-300"}
+              className={
+                index < rating.number ? "text-orange-400" : "text-gray-300"
+              }
             />
           ))}
           <span className="text-black text-sm font-medium ml-1">
