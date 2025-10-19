@@ -40,6 +40,7 @@ const CategoryNews = () => {
           return (
             <NewsCard
               key={item.id}
+              id={item.id}
               author={item.author}
               title={item.title}
               thumbnail_url={item.thumbnail_url}

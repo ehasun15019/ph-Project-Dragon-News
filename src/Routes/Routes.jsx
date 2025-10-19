@@ -5,6 +5,7 @@ import CategoryNews from "../pages/CategoryNews";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AuthLayout from "../layouts/AuthLayout";
+import NewsDetails from "../pages/NewsDetails";
 
 const routes  = createBrowserRouter(
     [
@@ -24,6 +25,13 @@ const routes  = createBrowserRouter(
                     }
                 }
             ]
+        },
+        {
+            path: "/news-details/:id",
+            element: <NewsDetails></NewsDetails>,
+            loader: () => {
+                return fetch("/news.json")
+            }
         },
         {
             path: "/auth",

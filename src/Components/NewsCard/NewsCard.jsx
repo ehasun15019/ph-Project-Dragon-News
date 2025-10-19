@@ -1,6 +1,7 @@
 import React from "react";
 import { FaEye, FaShareAlt } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
+import { Link } from "react-router";
 
 const NewsCard = ({
   author,
@@ -11,6 +12,7 @@ const NewsCard = ({
   tags,
   rating,
   total_view,
+  id
 }) => {
   return (
     <div className="w-full border border-gray-200 rounded-lg shadow-md p-4 space-y-4 hover:shadow-lg transition-shadow mt-3">
@@ -45,9 +47,9 @@ const NewsCard = ({
       {/* Details Preview */}
       <p className="text-sm text-gray-700">
         <span className="line-clamp-2 block">{details}</span>
-        <span className="text-blue-600 font-medium cursor-pointer">
+        <Link to={`/news-details/${id}`} className="text-blue-600 font-medium cursor-pointer">
           Read More
-        </span>
+        </Link>
       </p>
 
       {/* Tags */}
