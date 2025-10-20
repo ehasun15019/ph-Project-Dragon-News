@@ -14,7 +14,7 @@ const Navbar = () => {
       alert("sign out successfully")
     })
     .catch((error) => {
-      console.log(error) 
+     alert("Sign out failed: " + error.message);
     })
   }
 
@@ -33,7 +33,9 @@ const Navbar = () => {
       </div>
 
       <div className="login flex gap-4">
-        <img src={userIcon} alt="" />
+        {/* <img src={userIcon} alt="" /> */}
+
+        <img src={`${user ? user.photoURL : userIcon }`} className="w-10 h-10 rounded-full object-cover" alt="" />
 
         {
           user ? 

@@ -7,12 +7,14 @@ import Register from "../pages/Register";
 import AuthLayout from "../layouts/AuthLayout";
 import NewsDetails from "../pages/NewsDetails";
 import PrivateRoutes from "./PrivateRoutes";
+import Error from "../pages/Error";
 
 const routes  = createBrowserRouter(
     [
         {
             path: "/",
             element: <HomeLayout></HomeLayout>,
+            errorElement: <Error></Error>,
             children: [
                 {
                     path: "/",

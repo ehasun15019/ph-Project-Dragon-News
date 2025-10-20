@@ -28,7 +28,6 @@ const CategoryNews = () => {
     }
   }, [data, id]);
 
-  console.log(categories, id, data);
 
   return (
     <div className="px-5">

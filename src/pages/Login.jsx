@@ -23,14 +23,12 @@ const Login = () => {
 
     signInUserFunction(email, password)
     .then((getUser) => {
-      console.log(getUser.user)
       alert('login successfully');
       e.target.reset();
       
       navigate(redirect, {replace: true})
     })
     .catch((error) => {
-      console.log(error);
       setError("correct your email or password")
     })
   }

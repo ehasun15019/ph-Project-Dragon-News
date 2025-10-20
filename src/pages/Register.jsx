@@ -1,12 +1,13 @@
 import React, { use, useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthContext";
 
 const Register = () => {
-
-  const {createUserFunction, setUser} = use(AuthContext);
+  const { createUserFunction, setUser, updateUser } = use(AuthContext);
 
   const [nameError, setNameError] = useState("");
+
+  const navigate = useNavigate();
 
   /* handle Register functionality start */
   const handleRegister = (e) => {
@@ -15,28 +16,42 @@ const Register = () => {
     const from = e.target;
     const name = from.name.value;
 
-    if(name.length <= 5){
-      setNameError("Give the name within 6 characters")
-    }else {
-      setNameError("")
+    if (name.length <= 5) {
+      setNameError("Give the name within 6 characters");
+      return;
+    } else {
+      setNameError("");
     }
 
     const Photo = from.Photo.value;
     const email = from.email.value;
     const password = from.password.value;
 
-    console.log(name,Photo,email,password);
-
     createUserFunction(email, password)
-    .then((newUser) => {
-      console.log(newUser.user)
-    })
-    .catch((error) => {
-      console.log(error.message)
-    })
-  }
+      .then((newUser) => {
+        e.target.reset();
+        navigate("/");
+        updateUser({
+          displayName: name,
+          photoURL: Photo,
+        })
+          .then(() => {
+            setUser({
+              ...newUser.user,
+              displayName: name,
+              photoURL: Photo,
+            });
+            alert("Account created successfully!");
+          })
+          .catch((error) => {
+            alert("Profile update failed: " + error.message);
+          });
+      })
+      .catch((error) => {
+        alert("Registration failed: " + error.message);
+      });
+  };
   /* handle Register functionality End */
-
 
   return (
     <div className="flex justify-center min-h-screen items-center">
@@ -47,61 +62,60 @@ const Register = () => {
           </h2>
         </div>
 
-
         <form onSubmit={handleRegister} className="card-body">
           <fieldset className="fieldset">
             {/* Name */}
             <label className="label">Name</label>
-            <input 
-                type="text" 
-                className="input" 
-                placeholder="Name" 
-                name="name"
-                required
+            <input
+              type="text"
+              className="input"
+              placeholder="Name"
+              name="name"
+              required
             />
+
+            <div>
+              {nameError && <p className="text-red-600">{nameError}</p>}
+            </div>
 
             {/* Photo Url */}
             <label className="label">Photo Url</label>
-            <input 
-                type="text" 
-                className="input" 
-                placeholder="Photo" 
-                name="Photo"
-                required
+            <input
+              type="text"
+              className="input"
+              placeholder="Photo"
+              name="Photo"
+              required
             />
 
             {/* Email */}
             <label className="label">Email</label>
-            <input 
-                type="email" 
-                className="input" 
-                placeholder="Email" 
-                name="email"
-                required
+            <input
+              type="email"
+              className="input"
+              placeholder="Email"
+              name="email"
+              required
             />
 
             {/* Password */}
             <label className="label">Password</label>
-            <input 
-                type="password" 
-                className="input" 
-                placeholder="Password" 
-                name="password"
-                required
+            <input
+              type="password"
+              className="input"
+              placeholder="Password"
+              name="password"
+              required
             />
 
-            <button type="submit" className="btn btn-neutral mt-4">Register</button>
-
-            <div>
-              {
-                nameError && <p className="text-red-600">{nameError}</p>
-              }
-            </div>
+            <button type="submit" className="btn btn-neutral mt-4">
+              Register
+            </button>
           </fieldset>
 
           <div className="text-center pt-3">
             <p>
-               Have An Account ? please{" "}
+              Have An Account ? please{" "}
               <Link className="text-red-500" to="/auth/login">
                 Login
               </Link>
