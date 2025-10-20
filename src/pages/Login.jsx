@@ -1,13 +1,20 @@
-import React, { use } from "react";
-import { Link } from "react-router";
+import React, { use, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthContext";
 
 const Login = () => {
 
   const {signInUserFunction} = use(AuthContext);
 
+  const [error, setError] = useState("");
+
+  // redirect functionality 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const redirect = location.state?.redirect?.pathname || "/";
+
   //handle login functionality 
-  const handleFunctionality = (e) => {
+  const handleLoginFunctionality = (e) => {
     e.preventDefault();
 
     const from = e.target;
@@ -19,9 +26,12 @@ const Login = () => {
       console.log(getUser.user)
       alert('login successfully');
       e.target.reset();
+      
+      navigate(redirect, {replace: true})
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
+      setError("correct your email or password")
     })
   }
 
@@ -34,7 +44,7 @@ const Login = () => {
           </h2>
         </div>
 
-        <form className="card-body" onSubmit={handleFunctionality}>
+        <form className="card-body" onSubmit={handleLoginFunctionality}>
           <fieldset className="fieldset">
             {/* Email */}
             <label className="label">Email</label> 
@@ -62,6 +72,10 @@ const Login = () => {
 
             <button type="submit" className="btn btn-neutral mt-4">Login</button>
           </fieldset>
+
+          {
+            error && <p className="text-red-600">{error}</p>
+          }
 
           <div className="text-center pt-3">
             <p>

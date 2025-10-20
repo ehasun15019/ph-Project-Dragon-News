@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../Provider/AuthContext";
 
@@ -6,12 +6,21 @@ const Register = () => {
 
   const {createUserFunction, setUser} = use(AuthContext);
 
+  const [nameError, setNameError] = useState("");
+
   /* handle Register functionality start */
   const handleRegister = (e) => {
     e.preventDefault();
 
     const from = e.target;
     const name = from.name.value;
+
+    if(name.length <= 5){
+      setNameError("Give the name within 6 characters")
+    }else {
+      setNameError("")
+    }
+
     const Photo = from.Photo.value;
     const email = from.email.value;
     const password = from.password.value;
@@ -82,6 +91,12 @@ const Register = () => {
             />
 
             <button type="submit" className="btn btn-neutral mt-4">Register</button>
+
+            <div>
+              {
+                nameError && <p className="text-red-600">{nameError}</p>
+              }
+            </div>
           </fieldset>
 
           <div className="text-center pt-3">
